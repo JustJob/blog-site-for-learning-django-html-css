@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block head_title %}Add a blog.{% endblock %}
+{% block title %}Post your blog{% endblock %}
+
+{% block content %}
+<form action="/blog/add/blog" method="POST">
+	{% csrf_token %}
+	{% for field in form %}
+		<div class="fieldWrapper">
+			{{ field.errors }}
+			{{ field.label_tag }}: {{ field }}
+		</div>
+	{% endfor %}
+	<div class="submitAdd">
+		<input type="submit" value="Post"></input>
+</form>
+{% endblock %}

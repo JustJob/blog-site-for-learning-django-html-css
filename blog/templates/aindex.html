@@ -1,0 +1,40 @@
+ {% extends 'base.html' %}
+{% block title %}Welcome to my blog{% endblock %}
+
+{% block content %}
+
+    <h2>Posts</h2>
+    {% if posts %}
+        <ul>
+        {% for post in posts.object_list %}
+            <div class="post list_entry"><a href="{{post.get_absolute_url}}">{{post.title}}</a></div>
+        {% endfor %}
+        </ul>
+	
+		<div class="pagination">
+			<span class="step-links">
+				{% if posts.has_previous %}
+					<a class="other page" href="?page={{ posts.previous_page_number }}">previous</a>
+				{% endif %}
+
+				{% for i in posts.paginator.page_range %}
+					{% if posts.number != i %}
+						<a class="other page" href="?page={{ i }}">{{ i }}</a>
+					{%  else %}
+						<a class="current page" href="?page={{ i }}">{{ i }}</a>
+					{% endif %}
+				{% endfor %}
+
+				{% if posts.has_next %}
+					<a class="other page" href="?page={{ posts.next_page_number }}">next</a>
+				{% endif %}
+			</span>
+		</div>
+
+    {% else %}
+        <p>There are no posts.</p>
+    {% endif %}
+	
+	<a href="blog/add/blog">Post a blog</a>
+
+{% endblock %}

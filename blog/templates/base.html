@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <title>
+      {% block head_title %}Welcome to my blog{% endblock %}
+    </title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <style type="text/css">
+      h1
+      {
+      text-align:center;
+      }
+      .div
+      {
+        display:block;
+        margin:auto;
+      }
+      div.category-menu
+      {
+        width:1000px;
+        margin:auto;
+        background-color:black;
+        color:red;
+        overflow:auto;
+      }
+      .category-menu div.menu-item
+      {
+        width:{% widthratio 1000 categories.count 1 %}px;
+        float:left;
+        text-align:center;
+      }
+      a
+      {
+        text-decoration:none;
+        color:inherit;
+      }
+      .pagination a
+      {
+        color:blue;
+      }
+      .pagination .page
+      {
+        color:green;
+      }
+      .pagination .other
+      {
+        text-decoration:none;
+      }
+      .pagination .current
+      {
+        text-decoration:underline;
+        font-weight:bold;
+      }
+    </style>
+    <script type="text/javascript">
+      function changeBackColor(element, color)
+      {
+        var current_background_color = $(element).css("background-color");
+        $(element).mouseover(function(){
+          $(this).css("background-color", color);
+        });
+        $(element).mouseout(function(){
+          $(this).css("background-color", current_background_color);
+        });
+      }
+      $(document).ready(function() {
+        changeBackColor("div.menu-item", "rgb(50,50,50)")
+      });
+    </script>
+  </head>
+  <body>
+    <h1>
+      {% block title %}Welcome to my block{% endblock %}
+    </h1>
+    <div class="category-menu">
+    {% if categories %}
+      {% for category in categories %}
+        <a href="{{category.get_absolute_url}}">
+          <div class="menu-item">
+          {{category.title}}
+          </div>
+        </a>
+      {% endfor %}
+    {% endif %}
+    </div>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
